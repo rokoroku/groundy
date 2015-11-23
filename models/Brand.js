@@ -3,7 +3,7 @@ var Joi = require('joi');
 var Product = require('../models/Product.js');
 
 exports.Schema = Joi.object({
-    brandId: Joi.number(),
+    id: Joi.number(),
     name: Joi.string(),
     tel: Joi.string(),
     location: Joi.string(),
@@ -13,7 +13,7 @@ exports.Schema = Joi.object({
 }).meta({className: 'Brand'});
 
 exports.FullSchema = Joi.object({
-    brandId: Joi.number(),
+    id: Joi.number(),
     name: Joi.string(),
     tel: Joi.string(),
     location: Joi.string(),
@@ -29,7 +29,7 @@ exports.Collection = Waterline.Collection.extend({
     identity: 'brand',
     connection: 'memory',
     attributes: {
-        brandId: {
+        id: {
             type: 'integer',
             unique: true,
             autoIncrement: true,

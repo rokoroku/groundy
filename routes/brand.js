@@ -26,7 +26,7 @@ function getBrandById(request, reply) {
 
     var Brands = getCollection(request);
 
-    Brands.findOne(request.params.id)
+    Brands.findOne(Number(request.params.id))
         .populate('products')
         .exec(function (err, brand) {
             if (err) {
@@ -89,8 +89,11 @@ function getProductById(request, reply) {
         .exec(function (err, product) {
             if (err) {
                 reply(err)
-            } else {
+            } else if (product) {
+                //product.brand = brand
                 reply(product);
+            } else {
+                reply(Boom.notFound("Product not found"))
             }
         });
 }

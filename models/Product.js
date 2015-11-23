@@ -22,7 +22,7 @@ exports.Schema = Joi.object({
 exports.FullSchema = Joi.object({
     productId: Joi.string(),
     brand: Joi.object({
-        brandId: Joi.number(),
+        id: Joi.number(),
         name: Joi.string(),
         tel: Joi.string(),
         location: Joi.string(),
@@ -64,6 +64,14 @@ exports.Collection = Waterline.Collection.extend({
         },
         defaultWarrantyPeriod: {
             type: 'integer'
-        }
+        },
+
+        toJSON: function () {
+            var obj = this.toObject();
+            delete obj.id;
+            return obj;
+        },
+
     }
+
 });

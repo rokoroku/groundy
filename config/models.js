@@ -19,12 +19,13 @@ exports.fixtures = [
         model: 'brand',
         items: [
             {
-                "brandId": 0,
+                "id": 1,
                 "name": "LLOYD",
                 "tel": "123-456-7890",
                 "location": "서울",
                 "description": "몰라",
                 "logoImage": "https://scontent-icn1-1.xx.fbcdn.net/hprofile-xlp1/v/t1.0-1/p320x320/10603442_619451671502733_5577087642403228963_n.jpg?oh=8526af766e0ca75004ed2d066824f72d&oe=56E215B4",
+                "products": ["0_LPP15002G"]
             }
         ]
     },
@@ -32,9 +33,9 @@ exports.fixtures = [
         model: 'product',
         items: [
             {
-                "id": "0_LPP15002G",
+                "id": "1_LPP15002G",
                 "productId": "LPP15002G",
-                "brandId": "0",
+                "brand": 1,
                 "name": "ROSETTE",
                 "image": "http://image.lloydgift.com/Product/201501/LPP15002G_1_396.jpg",
                 "description": "중량	약 1.30g\n제조국: 베트남",
