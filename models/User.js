@@ -1,5 +1,5 @@
 var Waterline = require('waterline');
-var Joi = require('Joi');
+var Joi = require('joi');
 var Warranty = require('../models/Warranty.js');
 
 exports.Schema = Joi.object({

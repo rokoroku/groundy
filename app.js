@@ -11,7 +11,7 @@ var __connection = require('./config/connection');
 var server = new Hapi.Server();
 
 server.connection({
-    port: 8081,
+    port: process.env.PORT || 3000,
     host: 'localhost',
     labels: ['api']
 });
