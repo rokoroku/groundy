@@ -27,7 +27,10 @@ server.register(
             register: require('hapi-swaggered'),
             options: {
                 tags: {
-                    'user': 'Everything about Users'
+                    'user': 'Everything about Users',
+                    'brand': 'Everything about Brands',
+                    'product': 'Everything about Products',
+                    'warranty': 'Everything about Warranties'
                 },
                 info: {
                     title: __package.name,
@@ -96,8 +99,9 @@ server.register(
 );
 
 function registerRoutes(server) {
-    server.route(require('./routes/index'));
-    server.route(require('./routes/users'));
+    for (var i in __routes) {
+        server.route(__routes[i]);
+    }
 }
 
 function registerAuthStrategy(server) {

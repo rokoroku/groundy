@@ -1,11 +1,12 @@
 {
-  "name": "Groundy",
+  "name": "MyWarranty",
   "version": "1.0.0",
   "private": true,
   "scripts": {
     "start": "node ."
   },
   "dependencies": {
+    "boom": "^3.0.0",
     "good": "^6.3.0",
     "good-console": "^5.0.3",
     "handlebars": "^3.0.3",
@@ -13,15 +14,15 @@
     "hapi-auth-bearer-token": "^3.1.1",
     "hapi-swaggered": "^2.3.0",
     "hapi-swaggered-ui": "^2.0.1",
+    "hoek": "~2.14.0",
     "inert": "^3.0.1",
+    "items": "~1.1.0",
     "joi": "^6.6.1",
     "sails-memory": "^0.10.5",
     "sails-mongo": "^0.11.2",
     "sails-mysql": "^0.11.0",
     "serve-favicon": "~2.3.0",
     "vision": "^3.0.0",
-    "hoek": "~2.14.0",
-    "items": "~1.1.0",
     "waterline": "^0.10.x",
     "waterline-fixtures": "^0.2.x"
   }
