@@ -6,6 +6,7 @@
     "start": "node ."
   },
   "dependencies": {
+    "bcrypt": "^0.8.5",
     "boom": "^3.0.0",
     "good": "^6.3.0",
     "good-console": "^5.0.3",

@@ -45,6 +45,8 @@ exports.register = function (server, options, next) {
         }
 
         // Expose public objects from the ORM
+        global.Collections = ontology.collections;
+
         server.expose('collections', ontology.collections);
         server.expose('connections', ontology.connections);
         server.expose('schema', waterline.schema);

@@ -1,6 +1,6 @@
-var Waterline = require('waterline');
 var Joi = require('joi');
 var Product = require('../models/Product.js');
+var Waterline = require('waterline');
 
 exports.Schema = Joi.object({
     id: Joi.number(),
@@ -9,7 +9,9 @@ exports.Schema = Joi.object({
     location: Joi.string(),
     description: Joi.string(),
     logoImage: Joi.string(),
-    brandImages: Joi.array().items(Joi.string())
+    brandImages: Joi.array().items(Joi.string()),
+    createdAt: Joi.date(),
+    updatedAt: Joi.date()
 }).meta({className: 'Brand'});
 
 exports.FullSchema = Joi.object({

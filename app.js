@@ -1,11 +1,10 @@
 var Hapi = require('hapi');
-var server = new Hapi.Server();
-
-var Crypto = require('crypto');
+var Database = require('./database.js');
 
 var __package = require('./package.json');
-var __models = require('./config/models');
 var __routes = require('./config/routes');
+var __models = require('./config/models');
+var __fixtures = require('./config/fixtures');
 var __connection = require('./config/connection');
 
 var server = new Hapi.Server();
@@ -30,7 +29,8 @@ server.register(
                     'user': 'Everything about Users',
                     'brand': 'Everything about Brands',
                     'product': 'Everything about Products',
-                    'warranty': 'Everything about Warranties'
+                    'warranty': 'Everything about Warranties',
+                    'auth': 'Everything about Authentications'
                 },
                 info: {
                     title: __package.name,
@@ -55,18 +55,18 @@ server.register(
                     field: 'access_token',
                     scope: 'query', // header works as well
                     //valuePrefix: 'bearer ', // prefix incase
-                    defaultValue: 'default_access_token',
+                    defaultValue: 'developing_access_token',
                     placeholder: 'Enter your apiKey here'
                 },
             }
         },
         {
-            register: require('./database'),
+            register: Database,
             options: {
                 adapters: __connection.adapters,
                 connections: __connection.connections,
-                models: __models.models,
-                fixtures: __models.fixtures
+                models: __models,
+                fixtures: __fixtures
             }
         },
         {
@@ -116,10 +116,21 @@ function registerAuthStrategy(server) {
 
             // Use a real strategy here,
             // comparing with a token from your database for example
-            if (token === 'default_access_token') {
+            if (token === 'developing_access_token') {
                 callback(null, true, {token: token})
             } else {
-                callback(null, false, {token: token})
+                var AccessTokens = request.collections.access_token;
+                AccessTokens.findOne(token)
+                    .populate('user')
+                    .exec(function (err, retrieved) {
+                        if (retrieved && retrieved.isAlive()) {
+                            request.user = retrieved.user;
+                            callback(null, true, {token: token})
+                        } else {
+                            callback(null, false, {token: token})
+                        }
+
+                    });
             }
         }
     });

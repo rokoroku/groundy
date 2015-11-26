@@ -1,17 +1,19 @@
-var Waterline = require('waterline');
 var Joi = require('joi');
+var Waterline = require('waterline');
 var Product = require('../models/Product.js');
 
 exports.Schema = Joi.object({
     id: Joi.string(),
-    ownerId: Joi.string().optional(),
-    productId: Joi.string(),
+    owner: Joi.string().optional(),
+    product: Joi.string().required(),
     sellerName: Joi.string(),
     sellerTel: Joi.string(),
     sellerLocation: Joi.string(),
     memo: Joi.string(),
     purchaseDate: Joi.date(),
     expirationDate: Joi.date(),
+    createdAt: Joi.date(),
+    updatedAt: Joi.date(),
 }).meta({className: 'Warranty'});
 
 exports.FullSchema = Joi.object({
@@ -45,6 +47,7 @@ exports.Collection = Waterline.Collection.extend({
 
         product: {
             model: 'product',
+            required: true
         },
         owner: {
             model: 'user'

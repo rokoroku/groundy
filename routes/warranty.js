@@ -28,7 +28,7 @@ function getWarrantyById(request, reply) {
             if (err) {
                 reply(err)
             } else if (warranty) {
-                reply(brand);
+                reply(warranty);
             } else {
                 reply(Boom.notFound('Warranty not found.'));
             }

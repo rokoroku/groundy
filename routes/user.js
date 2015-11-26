@@ -152,7 +152,6 @@ module.exports = [
         path: '/user/',
         config: {
             tags: ['api', 'user'],
-            auth: 'default',
             description: 'Add a new user to the store',
             plugins: {
                 'hapi-swaggered': {

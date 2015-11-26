@@ -1,21 +1,34 @@
 var Joi = require('joi');
 var Boom = require('boom');
+var AccessToken = require('../models/AccessToken.js');
 var User = require('../models/User.js');
 
-function generateToken(user) {
-    return user.username;
-}
+var crypto = require('crypto');
+var TOKEN_LENGTH = 32;
 
 function authenticate(request, reply) {
     var Users = request.collections.user;
+    var AccessTokens = request.collections.access_token;
 
     Users.findOne({username: request.payload.username})
         .exec(function (err, user) {
             if (err) {
                 reply(err)
             } else if (user) {
-                if (user.password === request.payload.password) {
-                    reply({ access_token: generateToken(user) })
+                if (user.authenticate(request.payload.password)) {
+                    AccessTokens.destroy({user: user.id}).exec(function (err, removed) {
+                        if (err) {
+                            reply (err)
+                        } else {
+                            AccessTokens.create({user: user.id}).exec(function (err, created) {
+                                if (err) {
+                                    reply(err)
+                                } else {
+                                    reply(created)
+                                }
+                            })
+                        }
+                    })
                 } else {
                     reply(Boom.unauthorized('Authorization Failed.'))
                 }
@@ -38,9 +51,7 @@ module.exports = [
                     responses: {
                         default: {
                             description: 'OK',
-                            schema: Joi.object({
-                                access_token: Joi.string()
-                            })
+                            schema: AccessToken.Schema
                         },
                         400: {description: 'Bad Request'},
                         401: {description: 'Authorization Failed'},
